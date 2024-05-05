@@ -1,35 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import ShuffleCards from "./shuffleCards";
+import ImageCards from "./ImageCards";
+import "./App.css";
+
+let highScore = 0;
+let names = [];
+
+function ChangeHighScore(score){
+  if(score > highScore)
+    highScore = score;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [score, setScore] = useState(0);
+  ChangeHighScore(score);
+  const changeValues = (ids)=>{
+    if(!names.includes(document.getElementById(ids).nextSibling.textContent)){
+      names.push(document.getElementById(ids).nextSibling.textContent);
+      setScore(score + 1);
+      }else {
+        setScore(0);
+        names = [];
+      }
+  }
+
+  useEffect(()=>{
+    ShuffleCards();
+    return ()=>{
+    }
+  }, [score])
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Memory Card</h1>
+      <h2>Score: {score}</h2>
+      <h2>Highscore: {highScore}</h2>
+      <div id="main">
+        <div onClick={() => {changeValues('img1')}}>
+        <ImageCards id={'img1'} />
+        </div>
+        
+        <div onClick={() => {changeValues('img2')}}>
+        <ImageCards id={'img2'} />
+        </div>
+
+        <div onClick={() => {changeValues('img3')}}>
+        <ImageCards id={'img3'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img4')}}>
+        <ImageCards id={'img4'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img5')}}>
+        <ImageCards id={'img5'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img6')}}>
+        <ImageCards id={'img6'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img7')}}>
+        <ImageCards id={'img7'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img8')}}>
+        <ImageCards id={'img8'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img9')}}>
+        <ImageCards id={'img9'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img10')}}>
+        <ImageCards id={'img10'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img11')}}>
+        <ImageCards id={'img11'} />
+        </div>
+
+        <div onClick={()=>{changeValues('img12')}}>
+        <ImageCards id={'img12'} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
